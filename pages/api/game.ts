@@ -17,8 +17,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (title[0] === prevTitle[prevTitle.length - 1]) {
     results.ok(number);
+    res.status(200).json({ stats: "ok", detail: { title, prevTitle } });
   } else {
     results.notOk(number);
+    res.status(200).json({ stats: "not ok", detail: { title, prevTitle } });
   }
 };
 
