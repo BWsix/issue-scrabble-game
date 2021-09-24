@@ -2,11 +2,9 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { apiBase } from "src/constants";
 import { results } from "src/utils/results";
+import { verifyGithubPayload } from "src/utils/validator";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") return res.status(405);
 
   const { action, issue } = req.body as WebhookBody;
@@ -22,4 +20,6 @@ export default async function handler(
   } else {
     results.notOk(number);
   }
-}
+};
+
+export default verifyGithubPayload(handler);
