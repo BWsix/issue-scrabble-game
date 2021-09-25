@@ -12,8 +12,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { number, title } = issue;
 
-  const { data: allIssues } = await axios.get(apiBase);
-  const { title: prevTitle } = allIssues[1] as WebhookIssue;
+  const { data: allAcceptedIssues } = await axios.get(apiBase, {
+    params: { labels: "accepted" },
+  });
+  const { title: prevTitle } = allAcceptedIssues[0] as WebhookIssue;
 
   if (title[0] === prevTitle[prevTitle.length - 1]) {
     await results.ok(number);
