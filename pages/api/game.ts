@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await results.ok(number);
     res.status(200).json({ stats: "ok", detail: { title, prevTitle } });
   } else {
-    await results.notOk(number);
+    await results.notOk(number, prevTitle);
     res.status(200).json({ stats: "not ok", detail: { title, prevTitle } });
   }
 };

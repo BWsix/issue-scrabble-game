@@ -22,10 +22,16 @@ export const results = {
     await addLabel.accepted(number);
   },
 
-  notOk: async (number: number) => {
+  notOk: async (number: number, prevTitle: string) => {
     await axios.patch(
       apiIssue(number),
       { state: "closed", labels: ["invalid"] },
+      { headers: { Authorization: process.env.GITHUB_API_TOKEN } }
+    );
+
+    await axios.post(
+      apiIssueComment(number),
+      { body: "not ok. 上一個詞是 : " + prevTitle },
       { headers: { Authorization: process.env.GITHUB_API_TOKEN } }
     );
   },
